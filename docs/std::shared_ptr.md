@@ -8,6 +8,8 @@ It is just for convenience of my UML editor
 
 ![Idea](./images/sharedptr/shared_ptr_simple.jpg)
 
+In general, the _shared_ptr_ is combined by components of counter, pointer reference, pointer access.
+These contributor work in policy pattern and implemented in meta programming to provide flexibility in compile time.
 ## Components
 ### bad_weak_ptr
 It is an exception to be thrown when the ___weak_ptr_ is invalid.
@@ -456,15 +458,17 @@ Defined as
 As compatibility depends on implicit converter,
 but the only constructor of ___shared_ptr_ receives raw pointer is defined as explicit,
 the assignable __Yp_ is in fact one of ___share_ptr_, ___weak_ptr_ and _unique_ptr_.
-### Weak Pointer
+### weak_ptr
 _weak_ptr_ is similar to _WeakReference_ in _Java_.
 
 _weak_ptr_ is a read-only access to _shared_ptr_.
 That is, _weak_ptr_ depends on _shared_ptr_.
 There is no way to construct a _weak_ptr_ from a raw pointer.
 The root of a _weak_ptr_ is always a _shared_ptr_.
+And there is no way to touch the inner pointer from a _weak_ptr_.
+Whenever accessing to the inner pointer, a corresponding _shared_ptr_ generated from the _weak_ptr_.
 
-On the one had, user of _weak_ptr_ does not expect that the inner pointer is always valid.
+On the one hand, user of _weak_ptr_ does not expect that the inner pointer is always valid.
 Of course it provides function to assert if the inner pointer is valid.
 If user want to write to inner pointer, the _weak_ptr_ would transferred into a _shared_ptr_ automatically.
 And manipulation of _weak_ptr does not interference to memory management of the inner pointer in corresponding _shared_ptr_.
@@ -558,5 +562,69 @@ If the type of inner pointer has no intention to implement this function, nothin
 	_M_enable_shared_from_this_with(_Yp*) noexcept
 	{ }
 ```
-
+### shared_ptr
+#### make_shared
+The function provides an easy way to create a _share_ptr_ from inner pointer type.
+It is also a function wrapper of _shared_ptr_ creation to prevent exception thrown in _new_ [ref](https://www.cnblogs.com/heleifz/p/shared-principle-application.html).
 Ref: [shared_ptr](https://kingsamchen.github.io/2018/03/30/demystify-shared-ptr-and-weak-ptr-in-libstdcpp/)
+#### nullptr
+_shared_ptr_ implements special treatment for _nullptr_.
+##### without deleter
+```c++
+      constexpr shared_ptr(nullptr_t) noexcept : shared_ptr() { }
+      constexpr shared_ptr() noexcept : __shared_ptr<_Tp>() { }
+```
+
+```c++
+      constexpr __shared_ptr() noexcept
+      : _M_ptr(0), _M_refcount()
+      { }
+
+      constexpr __shared_count() noexcept : _M_pi(0)
+      { }
+```
+##### with deleter
+```c++
+      template<typename _Deleter>
+	shared_ptr(nullptr_t __p, _Deleter __d)
+        : __shared_ptr<_Tp>(__p, std::move(__d)) { }
+```
+
+```c++
+      template<typename _Deleter>
+	__shared_ptr(nullptr_t __p, _Deleter __d)
+	: _M_ptr(0), _M_refcount(__p, std::move(__d))
+	{ }
+```
+Don't know why there is no special treatment for ___shared_count_,
+maybe the library suppose the user knows what is going on with _deleter_ assigned.
+```c++      template<typename _Ptr, typename _Deleter, typename _Alloc>
+      	__shared_count(_Ptr __p, _Deleter __d, _Alloc __a) : _M_pi(0)
+      	{
+      	  typedef _Sp_counted_deleter<_Ptr, _Deleter, _Alloc, _Lp> _Sp_cd_type;
+      	  __try
+      	    {
+      	      typename _Sp_cd_type::__allocator_type __a2(__a);
+      	      auto __guard = std::__allocate_guarded(__a2);
+      	      _Sp_cd_type* __mem = __guard.get();
+      	      ::new (__mem) _Sp_cd_type(__p, std::move(__d), std::move(__a));
+      	      _M_pi = __mem;
+      	      __guard = nullptr;
+      	    }
+      	  __catch(...)
+      	    {
+      	      __d(__p); // Call _Deleter on __p.
+      	      __throw_exception_again;
+      	    }
+      	}
+```
+
+And validation in ___shared_ptr_access_
+```c++
+      element_type&
+      operator*() const noexcept
+      {
+	__glibcxx_assert(_M_get() != nullptr);
+	return *_M_get();
+      }
+```
