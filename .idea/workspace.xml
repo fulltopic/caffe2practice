@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="862cf458-22cf-4c42-9a48-236bb51c0b28" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/conv_op.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/op_create_cpu.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/op_def_create.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/op_run_cpu.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/images/sharedptr/shared_ptr.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/docs/images/sharedptr/shared_ptr.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/images/sharedptr/shared_ptr_simple.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/docs/images/sharedptr/shared_ptr_simple.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/std::shared_ptr.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/std::shared_ptr.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,12 +31,26 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/std::shared_ptr.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="198">
                 <caret line="11" selection-start-line="11" selection-end-line="11" />
+              </first_editor>
+              <second_editor>
+                <markdownNavigatorState />
+              </second_editor>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="644">
+                <caret line="468" selection-start-line="468" selection-end-line="468" />
               </first_editor>
               <second_editor>
                 <markdownNavigatorState />
@@ -54,6 +69,8 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/docs/std::shared_ptr.md" />
+        <option value="$PROJECT_DIR$/docs/framework_cpu.md" />
+        <option value="$PROJECT_DIR$/docs/conv_op.md" />
       </list>
     </option>
   </component>
@@ -68,6 +85,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -86,16 +105,21 @@
               <item name="docs" type="462c0819:PsiDirectoryNode" />
               <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="caffe2practice" type="b2602c69:ProjectViewProjectNode" />
+              <item name="caffe2practice" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="framework_cpu" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548608147207" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550869353177" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -167,8 +191,8 @@
     <frame x="1920" y="0" width="1280" height="1024" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.103084415" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49377123" visible="true" weight="0.12094156" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.50622874" side_tool="true" visible="true" weight="0.12094156" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -185,7 +209,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="SBT Console" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.3295583" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.33145434" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -214,6 +238,18 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="198">
             <caret line="11" selection-start-line="11" selection-end-line="11" />
+          </first_editor>
+          <second_editor>
+            <markdownNavigatorState />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="644">
+            <caret line="468" selection-start-line="468" selection-end-line="468" />
           </first_editor>
           <second_editor>
             <markdownNavigatorState />
