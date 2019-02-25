@@ -1,5 +1,5 @@
 # Convolution Operation
-An image for mnist graph, and which model the module is belong
+![mnist](./images/framework_cpu/mnist.jpg)
 ## Initiation
 ### Class Diagram
 Net, NetDef, Op, OpDef, Meta, Workspace, Tensor etc.
@@ -463,9 +463,120 @@ the calculation is a single plain 2D image *conv_op* process.
         Y_ptr[index] = Y + index * Y_stride;
       }
     }
-
 ``` 
 * batch_size = N * G to cover all the images
-* W_ptr\[index] = filter + j * W_stride: W_ptr is of size (M / G * C) 
+* W_ptr\[index] = filter + j * W_stride: W_ptr is of size (M / G * C)
+#### Im2col
+``` c++
+C10_EXPORT void Im2Col<float, CPUContext, StorageOrder::NCHW>(
+```
+##### Im2ColZeroPaddingAndNoDilationNCHW
+In simple case:
+``` c++
+  if (pad_t == 0 && pad_l == 0 && pad_b == 0 && pad_r == 0 && dilation_h == 1 &&
+      dilation_w == 1) {
+    Im2ColZeroPaddingAndNoDilationNCHW<float>(
+```
+Calculate output sizes:
+``` c++
+C10_EXPORT void Im2ColZeroPaddingAndNoDilationNCHW(
+    const int C,
+    const int H,
+    const int W,
+    const int kernel_h,
+    const int kernel_w,
+    const int stride_h,
+    const int stride_w,
+    const T* img_data,
+    T* col_data,
+    CPUContext* context) {
+  const int output_h = (H - kernel_h) / stride_h + 1;
+  const int output_w = (W - kernel_w) / stride_w + 1;
+  const int output_size = output_h * output_w;
+  for (int c = 0; c < C; ++c) {
+    for (int kh = 0; kh < kernel_h; ++kh) {
+      for (int kw = 0; kw < kernel_w; ++kw) {
+        const T* src = img_data + kh * W + kw;
+      }
+```
+The output of Im2Col is a matrix of (channel * K_H * K_W, output_H * output_W),
+Suppose we are scanning ith element of kernel, i ∈ (0, K_H * K_W),
+the line i of output contains all the elements of image_data that could be mapped to ith element of kernel.
+
+In theory, each element of image_data could be the corresponding element of ith element of kernel,
+the only constraint is matrix range. 
+And the constraint had been met by output_h/output_w calculation.
+``` c++
+        const T* src = img_data + kh * W + kw;
+```        
+So, the source of each line of output matrix. 
+``` c++
+        if (stride_w == 1) {
+          CopyMatrix<T, CPUContext>(
+              output_h,
+              output_w,
+              src,
+              stride_h * W,
+              col_data,
+              output_w,
+              context);
+        } else {
+           CopyMatrix<T, CPUContext>(
+              output_h,
+              output_w,
+              src,
+              stride_h * W,
+              stride_w,
+              col_data,
+              output_w,
+              1,
+              context);
+        }
+```
+Copy a matrix with src as element\[0]\[0], #row = output_h, #col = output_w
+into col_data with row-first-order.
+``` c++
+        col_data += output_size;
+```
+One line of output finished.
+##### Other 2D Case
+``` c++
+  const int output_h =
+      (H + pad_t + pad_b - (dilation_h * (kernel_h - 1) + 1)) / stride_h + 1;
+  const int output_w =
+      (W + pad_l + pad_r - (dilation_w * (kernel_w - 1) + 1)) / stride_w + 1;
+```
+Standard output calculation.
+``` c++
+  for (int c = 0; c < C; ++c) {
+    for (int kh = 0; kh < kernel_h; ++kh) {
+      for (int kw = 0; kw < kernel_w; ++kw) {
+```
+Still travels by kernel element.
+``` c++
+        for (int h = 0; h < output_h; ++h) {
+          const int h_pad = h * stride_h - pad_t + kh * dilation_h;        
+```
+Then, to fill in output element one by one.
+``` c++
+          if (!utils::IsAGeZeroAndALtB(h_pad, H)) {
+            std::memset(col_data + h * output_w, 0, output_w * sizeof(float));
+            continue;
+          }
+```      
+If it is a pad line, that is, the line padded on the top or bottom of the matrix,
+set all elements zero.
+``` c++
+          for (int w = 0; w < output_w; ++w) {
+            const int w_pad = w * stride_w - pad_l + kw * dilation_w;
+            col_data[h * output_w + w] = utils::IsAGeZeroAndALtB(w_pad, W)
+                ? img_data[(c * H + h_pad) * W + w_pad]
+                : 0;
+          }
+```
+The original index of w is (w * stride_w + kw * dilation_w), so no +1,
+with pad_l counted, 
+the corresponding element of col_data is 0 in padding case,
+or w_pad in other cases.          
 ## GPU Calculation
 ## Registry in Compile Time
