@@ -2,9 +2,122 @@
 ![mnist](./images/framework_cpu/mnist.jpg)
 ## Initiation
 ### Class Diagram
-Net, NetDef, Op, OpDef, Meta, Workspace, Tensor etc.
+![net](./images/framework_cpu/net.jpg)
+
+*Operator* object is created based on *OperatorDef*.
+
+In *operator.cc*:
+``` c++
+unique_ptr<OperatorBase> _CreateOperator(
+    const OperatorDef& operator_def,
+    Workspace* ws) {
+```
+In runtime, the schema just works as a validator:
+``` c++
+  auto* schema = OpSchemaRegistry::Schema(op_type);
+  if (schema) {
+    CAFFE_ENFORCE(
+        schema->Verify(operator_def),
+        "Operator def did not pass schema checking: ",
+        ProtoDebugString(operator_def));
+  }
+```
+Create through registry:
+``` c++
+unique_ptr<OperatorBase> TryCreateC10Operator(
+    const string& key,
+    const OperatorDef& operator_def,
+    Workspace* ws) {
+  return C10OperatorRegistry()->Create(key, operator_def, ws);
+}
+```
+The creator is registered in conv_op.cc
+``` c++
+REGISTER_CPU_OPERATOR(Conv, ConvOp<float, CPUContext>);
+```
+So, the constructor is invoked:
+``` c++
+ public:
+  USE_CONV_POOL_BASE_FUNCTIONS(Context);
+  ConvOp(const OperatorDef& operator_def, Workspace* ws)
+      : ConvPoolOpBase<Context>(operator_def, ws) {
+```  
+The convolution specific arguments are initiated in parent class:
+``` c++
+ public:
+  USE_OPERATOR_CONTEXT_FUNCTIONS;
+  ConvPoolOpBase(const OperatorDef& operator_def, Workspace* ws)
+      : Operator<Context>(operator_def, ws),
+        legacy_pad_(
+            static_cast<LegacyPadding>(this->template GetSingleArgument<int>(
+                "legacy_pad",
+                LegacyPadding::NOTSET))),
+        global_pooling_(
+        		//ZF: GetSingleArgument / GetRepeatedArgument
+            this->template GetSingleArgument<int>("global_pooling", 0)),
+        kernel_(this->template GetRepeatedArgument<int>("kernels")),
+        dilation_(this->template GetRepeatedArgument<int>("dilations")),
+        stride_(this->template GetRepeatedArgument<int>("strides")),
+        pads_(this->template GetRepeatedArgument<int>("pads")),
+        float16_compute_(
+            this->template GetSingleArgument<bool>("float16_compute", false)),
+        group_(this->template GetSingleArgument<int>("group", 1)),
+        order_(StringToStorageOrder(
+            this->template GetSingleArgument<string>("order", "NCHW"))),
+			//ZF: What's shared_buffer for?
+        shared_buffer_(
+            this->template GetSingleArgument<int>("shared_buffer", 0)),
+        ws_(ws) {
+```
+The input/output are initiated in base class *OperatorBase*:
+
+But seemed that the OperatorDef in specified class has only check/validation/test functions. 
+``` c++
+OperatorBase::OperatorBase(const OperatorDef& operator_def, Workspace* ws)
+    : operator_ws_(ws),
+      operator_def_(std::make_shared<OperatorDef>(operator_def)),
+      device_option_(
+          operator_def.has_device_option() ? operator_def.device_option()
+                                           : DeviceOption()),
+      event_(caffe2::make_unique<Event>(device_option_)) {
+  static GlobalInitIsCalledGuard guard;
+  for (const string& input_str : operator_def.input()) {
+    auto* blob = ws->GetBlob(input_str);
+    CAFFE_ENFORCE(
+        blob != nullptr,
+        "op ",
+        operator_def.type(),
+        ": Encountered a non-existing input blob: ",
+        input_str);
+    inputs_.push_back(blob);
+  }
+
+  GetOperatorLogger()(operator_def);
+
+  for (const string& output_str : operator_def.output()) {
+    outputs_.push_back(CHECK_NOTNULL(ws->CreateBlob(output_str)));
+  }
+
+  type_ = operator_def.type();
+}
+```  
+The input/output schema and indices are registered in *conv_op*.cc
+``` c++
+std::function<void(OpSchema&)> ConvDocGenerator(const char* dim) {
+   return [=](OpSchema& schema) {  
+```
+``` c++
+OPERATOR_SCHEMA(Conv)
+    .NumInputs(2, 3)
+    .NumOutputs(1)
+    .TensorInferenceFunction(ConvPoolOpBase<CPUContext>::TensorInferenceForConv)
+    .CostInferenceFunction(OpSchema::CostInferenceFunctionType(
+        ConvPoolOpBase<CPUContext>::CostInferenceForConv))
+    .FillUsing(ConvDocGenerator(""))
+    .InheritOnnxSchema();
+```
+              
 ### Sequence 
-TODO: To add OpDef relationship
 ![Create Seq](./images/framework_cpu/op_create_cpu.jpg)
 ### ConvOp Class
 The class create an object of certain kernel with specific environment,

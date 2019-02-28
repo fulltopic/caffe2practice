@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="862cf458-22cf-4c42-9a48-236bb51c0b28" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/mnist.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/net.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/conv_op.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/conv_op.md" afterDir="false" />
     </list>
@@ -47,8 +47,8 @@
         <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-918">
-                <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-end-line="7" />
+              <first_editor relative-caret-position="90">
+                <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
               </first_editor>
               <second_editor>
                 <markdownNavigatorState />
@@ -73,10 +73,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2050" />
-    <option name="y" value="170" />
-    <option name="width" value="960" />
-    <option name="height" value="796" />
+    <option name="x" value="1920" />
+    <option name="width" value="1280" />
+    <option name="height" value="1024" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -117,7 +116,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551118641297" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551320110621" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -157,6 +156,7 @@
       </method>
     </configuration>
     <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <properties />
       <listeners />
@@ -189,8 +189,8 @@
     <frame x="1920" y="0" width="1280" height="1024" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49150622" visible="true" weight="0.12418831" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.5084938" side_tool="true" visible="true" weight="0.12418831" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4869762" visible="true" weight="0.12987013" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5130238" side_tool="true" visible="true" weight="0.12987013" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -246,8 +246,8 @@
     <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="-918">
-            <caret line="6" column="17" lean-forward="true" selection-start-line="6" selection-end-line="7" />
+          <first_editor relative-caret-position="90">
+            <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           </first_editor>
           <second_editor>
             <markdownNavigatorState />
