@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="862cf458-22cf-4c42-9a48-236bb51c0b28" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/net.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/cudnn.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/cudnn_conv_backward.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/cudnn_conv_forward.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/images/framework_cpu/cudnn_stream.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/conv_op.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/conv_op.md" afterDir="false" />
     </list>
@@ -46,9 +49,9 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="90">
-                <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="320">
+                <caret line="850" column="31" selection-start-line="850" selection-start-column="31" selection-end-line="850" selection-end-column="31" />
               </first_editor>
               <second_editor>
                 <markdownNavigatorState />
@@ -82,6 +85,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -111,12 +115,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551320110621" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553175021453" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -189,8 +192,8 @@
     <frame x="1920" y="0" width="1280" height="1024" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4869762" visible="true" weight="0.12987013" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.5130238" side_tool="true" visible="true" weight="0.12987013" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4801812" visible="true" weight="0.14448053" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5198188" side_tool="true" visible="true" weight="0.14448053" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -219,6 +222,9 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/docs/images/framework_cpu/net.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
@@ -245,9 +251,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/conv_op.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="90">
-            <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="320">
+            <caret line="850" column="31" selection-start-line="850" selection-start-column="31" selection-end-line="850" selection-end-column="31" />
           </first_editor>
           <second_editor>
             <markdownNavigatorState />
