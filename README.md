@@ -1,5 +1,7 @@
 # caffe2practice
 
+The basic Test/Toy/Mnist/RNN are copy of project [https://github.com/rilesdg3/caffe2-Tutorial.git](https://github.com/rilesdg3/caffe2-Tutorial)
+
 A demo to practice caffe2.
 
 For CPU, NO GPU consideration currently.
