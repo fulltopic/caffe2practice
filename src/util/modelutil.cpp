@@ -14,7 +14,7 @@ namespace caffe2 {
 			initModel(from.initModel, mName + "_init"), trainModel(from.trainModel, mName + "_train") {
 	}
 
-	ModelUtil::ModelUtil(NetUtil &init_net, NetUtil &predict_net,
+	ModelUtil::ModelUtil(NetUtilNN &init_net, NetUtilNN &predict_net,
 	                     const std::string &name)
 	    : modelName(name), initModel(init_net), trainModel(predict_net) {
 	}

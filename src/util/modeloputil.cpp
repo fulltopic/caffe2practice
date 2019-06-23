@@ -237,7 +237,7 @@ namespace caffe2 {
 										const std::string& hidden_output,
 										const std::string& cell_state,
 										bool force_cpu) {
-		NetUtil forward(scope);
+		NetUtilNN forward(scope);
 		forward.SetType("rnn");
 		forward.AddInput("input_t");
 		forward.AddInput("timestep");
@@ -258,7 +258,7 @@ namespace caffe2 {
 		forward.AddOutput(scope + "/cell_t");
 
 
-		NetUtil backward("RecurrentBackwardStep");
+		NetUtilNN backward("RecurrentBackwardStep");
 		backward.SetType("simple");
 		backward.AddGradientOp(*lstm);
 

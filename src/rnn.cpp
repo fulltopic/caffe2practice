@@ -10,7 +10,7 @@
 #include <glog/logging.h>
 
 #include "util/modelutil.h"
-#include "util/NetUtil.h"
+//#include "util/NetUtil.h"
 #include "util/TensorUtil.h"
 
 #include <iostream>

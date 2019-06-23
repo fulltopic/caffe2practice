@@ -11,7 +11,7 @@
 #include <glog/logging.h>
 
 #include "util/modelutil.h"
-#include "util/NetUtil.h"
+//#include "util/NetUtil.h"
 //#include "util/ModelDisplayUtil.h"
 
 #include <iostream>
@@ -22,13 +22,13 @@ using std::cout;
 using std::endl;
 
 //const std::string trainDbPath("res/lmdb/mnist-train-nchw-lmdb");
-const std::string lmDbPath("./res/lmdb/mnist-train-nchw-lmdb");
-const std::string lmDbTestPath("./res/lmdb/mnist-test-nchw-lmdb");
+const std::string lmDbPath("/home/zf/workspaces/workspace_cpp/testcaffe2/build/res/lmdb/mnist-train-nchw-lmdb");
+const std::string lmDbTestPath("/home/zf/workspaces/workspace_cpp/testcaffe2/build/res/lmdb/mnist-test-nchw-lmdb");
 
-const std::string miniDbPath("./res/mnist-test-nhwc-minidb");
-const std::string levelDbPath("./res/leveldb/mnist-train-nchw-leveldb");
+const std::string miniDbPath("/home/zf/workspaces/workspace_cpp/testcaffe2/build/res/mnist-test-nhwc-minidb");
+const std::string levelDbPath("/home/zf/workspaces/workspace_cpp/testcaffe2/build/res/leveldb/mnist-train-nchw-leveldb");
 
-const std::string testDbPath("./res");
+const std::string testDbPath("/home/zf/workspaces/workspace_cpp/testcaffe2/build/res");
 const int batchSize = 16;
 
 
@@ -126,6 +126,7 @@ void runWithTest() {
 	ModelUtil model("mnist_train");
 //	ModelDisplayUtil displayModel(initModel, trainModel);
 
+//	addInputByUtil(model, 64, levelDbPath, "leveldb");
 	addInputByUtil(model, 64, lmDbPath, "lmdb");
 	addTrainModel(model, false);
 	addBackward(model);
@@ -188,14 +189,14 @@ void runWithTest() {
 }
 
 int main(int argc, char** argv) {
-//	google::InitGoogleLogging("Test");
-//	FLAGS_log_dir = "./log.txt";
-//	FLAGS_stderrthreshold = google::INFO;
+	google::InitGoogleLogging("Test");	//初始化
+	FLAGS_log_dir = "/home/zf/workspaces/workspace_cpp/testcaffe2/build/log.txt";	//重定向日志输出到指定文件夹D://log下 我不需要日志输出 所以并没有指定
+	FLAGS_stderrthreshold = google::INFO;	//在命令只打印google::ERROR级别以及该级别以上的日志信息
 
 
 	caffe2::GlobalInit(&argc, &argv);
-	caffe2::run();
-//	caffe2::runWithTest();
+//	caffe2::run();
+	caffe2::runWithTest();
 	google::protobuf::ShutdownProtobufLibrary();
 
 	return 0;

@@ -2,7 +2,7 @@
 #define MODEL_UTIL_H
 
 #include <caffe2/core/net.h>
-#include "util/NetUtil.h"
+#include "util/NetUtilNN.h"
 
 namespace caffe2 {
 
@@ -61,15 +61,15 @@ enum ConstItem {
 
 class ModelUtil {
 protected:
-	NetUtil initModel;
-	NetUtil trainModel;
+	NetUtilNN initModel;
+	NetUtilNN trainModel;
 public:
 	std::string modelName;
 public:
 //	ModelUtil(NetDef& iModel, NetDef& tModel, std::string mName);
 	ModelUtil(std::string mName);
 	ModelUtil(const ModelUtil& from, const std::string mName);
-	ModelUtil(NetUtil &init_net, NetUtil &predict_net,
+	ModelUtil(NetUtilNN &init_net, NetUtilNN &predict_net,
 	                     const std::string &name);
 	ModelUtil(NetDef &init_net, NetDef& predict_net, std::string name);
 	void buildModel(Workspace& ws);
