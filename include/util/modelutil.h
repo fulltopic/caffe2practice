@@ -60,9 +60,10 @@ enum ConstItem {
 };
 
 class ModelUtil {
-public:
+protected:
 	NetUtil initModel;
 	NetUtil trainModel;
+public:
 	std::string modelName;
 public:
 //	ModelUtil(NetDef& iModel, NetDef& tModel, std::string mName);

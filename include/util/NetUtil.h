@@ -28,9 +28,10 @@ Argument* net_add_arg(OperatorDef& op, const std::string& name,
                       const std::string& value);
 
 class NetUtil {
-public:
+protected:
 	NetDef net;
 
+public:
 //	static const std::map<std::string, std::string> customer_gradient;
 	bool opHasOutput (const OperatorDef& op, const std::set<std::string>& names);
 
