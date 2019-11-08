@@ -18,7 +18,7 @@ void print(Blob* blob, const std::string& name) {
 	//auto tensor = blob->->Get<TensorCPU>();
 	Tensor* tensor = BlobGetMutableTensor(blob, caffe2::DeviceType::CPU);
 	const auto& data = tensor->data<float>();
-	std::cout << name << "(" << tensor->dims()
+	std::cout << name << "(" << tensor->ndim()
             				<< "): " << std::vector<float>(data, data + tensor->size())
 							<< std::endl;
 }

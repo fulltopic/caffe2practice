@@ -17,6 +17,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace caffe2 {
 void AddFC(ModelUtil& model, const std::string& input,
@@ -47,7 +48,7 @@ const int FLAGS_gen_length = 500; //TODO
 const bool FLAGS_dump_model = true;
 const int FLAGS_hidden_size = 200;
 const string FLAGS_model = "RNN";
-const string FLAGS_train_data = "./res/shakespeare.txt";
+const string FLAGS_train_data = "../res/shakespeare.txt";
 const auto FLAGS_device = caffe2::DeviceType::CPU;
 const bool FLAGS_outputdata = false;
 
@@ -265,7 +266,7 @@ void reportPerformance(clock_t& last_time, int& progress, const int num_iter) {
 
 void updateLoss(Workspace& workspace, double& smooth_loss, float& last_n_loss) {
 	  auto lossBlob = workspace.GetBlob(loss_name);
-	  auto lossTensor = lossBlob->Get<TensorCPU>();
+	  auto& lossTensor = lossBlob->Get<TensorCPU>();
 	  auto loss = lossTensor.data<float>()[0] * FLAGS_seq_length;
 
 	  smooth_loss = 0.999 * smooth_loss + 0.001 * loss;
@@ -312,7 +313,7 @@ void generateText(Workspace& workspace, ModelUtil& model, ModelUtil& prepare,
 
 		  model.runModel(workspace);
 
-		  auto predBlob = workspace.GetBlob(predictions)->Get<TensorCPU>();
+		  auto& predBlob = workspace.GetBlob(predictions)->Get<TensorCPU>();
 		  auto data = predBlob.data<float>();
 
 		  auto r = (float)rand() / RAND_MAX;

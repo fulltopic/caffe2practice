@@ -227,7 +227,7 @@ template <typename T>
 void tensor_print_type(const TensorCPU &tensor, const std::string &name,
                        int max) {
   const auto &data = tensor.data<T>();
-  if (name.length() > 0) std::cout << name << "(" << tensor.dims() << "): ";
+  if (name.length() > 0) std::cout << name << "(" << tensor.ndim() << "): ";
   for (auto i = 0; i < (tensor.size() > max ? max : tensor.size()); ++i) {
     std::cout << (float)data[i] << ' ';
   }

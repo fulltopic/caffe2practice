@@ -6,7 +6,7 @@ namespace caffe2 {
 //
 //	}
 
-	ModelUtil::ModelUtil(std::string mName):modelName(mName), initModel(mName + "_init"), trainModel(mName + "_train") {
+	ModelUtil::ModelUtil(std::string mName): initModel(mName + "_init"), trainModel(mName + "_train"), modelName(mName) {
 
 	}
 
@@ -28,6 +28,7 @@ namespace caffe2 {
 
 	void ModelUtil::buildModel(Workspace& ws) {
 		ws.RunNetOnce(initModel.net);
+//		ws.RunNetOnce(initModel.net);
 		ws.CreateNet(trainModel.net);
 	}
 

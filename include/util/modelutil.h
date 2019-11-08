@@ -1,6 +1,7 @@
 #ifndef MODEL_UTIL_H
 #define MODEL_UTIL_H
 
+#include <caffe2/core/workspace.h>
 #include <caffe2/core/net.h>
 #include "util/NetUtilNN.h"
 
